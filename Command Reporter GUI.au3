@@ -49,45 +49,61 @@ GUICtrlCreateLabel("BatchFile Name", 16, 336, 79, 17)
 GUICtrlCreateLabel("Task Name", 16, 360, 59, 17)
 
 ;inputs (and fill them in if settings.ini is present)
-$usr = GUICtrlCreateInput("", 120, 20, 249, 21)
+$usr = GUICtrlCreateInput("", 121, 20, 249, 21)
+guictrlsettip(-1, "SIMS Username", "Command Reporter GUI", 1,1)
 if not $import[1][1] = "" Then
 	guictrlsetdata($usr, $import[1][1], "")
 EndIf
 
-$pwd = GUICtrlCreateInput("", 120, 43, 249, 21, $ES_PASSWORD)
+$pwd = GUICtrlCreateInput("", 121, 43, 249, 21, $ES_PASSWORD)
+guictrlsettip(-1, "SIMS Password", "Command Reporter GUI", 1,1)
 if not $import[2][1] = "" Then
 	guictrlsetdata($pwd, $import[2][1], "")
 EndIf
 
-$sname = GUICtrlCreateInput("", 120, 65, 249, 21)
+$sname = GUICtrlCreateInput("", 121, 65, 249, 21)
+guictrlsettip(-1, "SIMS Servername (without \\)", "Command Reporter GUI", 1,1)
 if not $import[3][1] = "" Then
 	guictrlsetdata($sname, $import[3][1], "")
 EndIf
 
 $dname = GUICtrlCreateInput("", 121, 89, 249, 21)
+guictrlsettip(-1, "SIMS Database Name (e.g SIMS2008)", "Command Reporter GUI", 1,1)
 if not $import[4][1] = "" Then
 	guictrlsetdata($dname, $import[4][1], "")
 EndIf
 
 $TRUSTED = GUICtrlCreateCheckbox("Trusted", 16, 120, 97, 17)
+guictrlsettip(-1, "Trusted Authentication", "Command Reporter GUI", 1,1)
 $rname = GUICtrlCreateInput("", 121, 148, 249, 21)
+guictrlsettip(-1, "SIMS Report Name", "Command Reporter GUI", 1,1)
 $params = GUICtrlCreateInput("", 121, 172, 249, 21)
+guictrlsettip(-1, "SIMS Parameters", "Command Reporter GUI", 1,1)
 $output = GUICtrlCreateInput("", 121, 195, 249, 21)
+guictrlsettip(-1, "Output type", "Command Reporter GUI", 1,1)
 $paramdef = GUICtrlCreateInput("", 121, 218, 249, 21)
+guictrlsettip(-1, "Parameters definitions", "Command Reporter GUI", 1,1)
 $paramfile = GUICtrlCreateInput("", 121, 242, 249, 21)
+guictrlsettip(-1, "Parameters file (XML Format)", "Command Reporter GUI", 1,1)
 $QUIET = GUICtrlCreateCheckbox("QUIET", 16, 272, 97, 17)
 
 ;export inputs
 $batchname = GUICtrlCreateInput("", 121, 331, 223, 21)
+guictrlsettip(-1, "Location of the generated batchfile", "Command Reporter GUI", 1,1)
 $batloc = GUICtrlCreateButton("...", 347, 330, 25, 23)
-$taskname = GUICtrlCreateInput("", 121, 356, 223, 21)
-$taskloc = GUICtrlCreateButton("...", 347, 355, 25, 23)
+$taskname = GUICtrlCreateInput("", 121, 356, 249, 21)
+guictrlsettip(-1, "Name of scheduled task to be created (Must be Unique without spaces)", "Command Reporter GUI", 1,1)
+;$taskloc = GUICtrlCreateButton("...", 347, 355, 25, 23)
 GUICtrlCreateGroup("", -99, -99, 1, 1)
 
 ;controls
 $save_btn = GUICtrlCreateButton("Save Details", 8, 400, 75, 25)
+guictrlsettip(-1, "Only saves Username,Password,Servername and Database name", "Command Reporter GUI", 1,1)
+
 $genbat_btn = GUICtrlCreateButton("Generate Batchfile", 88, 400, 115, 25)
+guictrlsetstate(-1, $GUI_DISABLE)
 $gentask_btn = GUICtrlCreateButton("Generate Scheduled Task", 208, 400, 171, 25)
+guictrlsetstate(-1, $GUI_DISABLE)
 
 GUISetState(@SW_SHOW)
 
@@ -107,6 +123,17 @@ While 1
 				local $data[5][2] = [[4, ""],["username", $usr],["password", $pwd],["Server", $sname],["database", $dname]]
 				IniWriteSection($details, "Settings", $data)
 			endif
+		case $batloc
+			$path = FileSaveDialog("Batch File Location", @MyDocumentsDir, "Batch File (*.bat)", 2+16)
+			guictrlsetdata($batchname, $path, "")
+			guictrlsetstate($genbat_btn, $GUI_ENABLE)
+		case $taskname
+			$state = GUICtrlread($taskname)
+			if not $state = "" Then
+				guictrlsetstate($gentask_btn, $GUI_ENABLE)
+			else
+				guictrlsetstate($gentask_btn, $GUI_DISABLE)
+			EndIf
 		case $genbat_btn
 
 		case $gentask_btn
