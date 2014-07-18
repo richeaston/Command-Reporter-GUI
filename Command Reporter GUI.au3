@@ -50,41 +50,41 @@ GUICtrlCreateLabel("Task Name", 16, 360, 59, 17)
 
 ;inputs (and fill them in if settings.ini is present)
 $usr = GUICtrlCreateInput("", 121, 20, 249, 21)
-guictrlsettip(-1, "SIMS Username", "Command Reporter GUI", 1,1)
+guictrlsettip(-1, "ABCD is the SIMS user name (not the SQL Server user name)", "/USER:ABCD", 1,1)
 if not $import[1][1] = "" Then
 	guictrlsetdata($usr, $import[1][1], "")
 EndIf
 
 $pwd = GUICtrlCreateInput("", 121, 43, 249, 21, $ES_PASSWORD)
-guictrlsettip(-1, "SIMS Password", "Command Reporter GUI", 1,1)
+guictrlsettip(-1, "ABCD is the SIMS password (not the SQL Server password)", "/PASSWORD:ABCD", 1,1)
 if not $import[2][1] = "" Then
 	guictrlsetdata($pwd, $import[2][1], "")
 EndIf
 
 $sname = GUICtrlCreateInput("", 121, 65, 249, 21)
-guictrlsettip(-1, "SIMS Servername (without \\)", "Command Reporter GUI", 1,1)
+guictrlsettip(-1, "The name of the SQL Server to connect to.", "/SERVERNAME:ABCD", 1,1)
 if not $import[3][1] = "" Then
 	guictrlsetdata($sname, $import[3][1], "")
 EndIf
 
 $dname = GUICtrlCreateInput("", 121, 89, 249, 21)
-guictrlsettip(-1, "SIMS Database Name (e.g SIMS2008)", "Command Reporter GUI", 1,1)
+guictrlsettip(-1, "The name of the SIMS database to run the report against.", "/DATABASENAME:ABCD", 1,1)
 if not $import[4][1] = "" Then
 	guictrlsetdata($dname, $import[4][1], "")
 EndIf
 
 $TRUSTED = GUICtrlCreateCheckbox("Trusted", 16, 120, 97, 17)
-guictrlsettip(-1, "Trusted Authentication", "Command Reporter GUI", 1,1)
+guictrlsettip(-1, "Use the current Windows user to connect to the SIMS system." & @CR & "(not to be used with /USER or /PASSWORD)", "/TRUSTED", 1,1)
 $rname = GUICtrlCreateInput("", 121, 148, 249, 21)
-guictrlsettip(-1, "SIMS Report Name", "Command Reporter GUI", 1,1)
+guictrlsettip(-1, "ABCD (quotes optional) is the name of the report seen in this users My Reports screen in SIMS.net", '/REPORT:"ABCD"', 1,1)
 $params = GUICtrlCreateInput("", 121, 172, 249, 21)
-guictrlsettip(-1, "SIMS Parameters", "Command Reporter GUI", 1,1)
+guictrlsettip(-1, "ABCD (quotes optional) is a string containing xml which defintes the parameters for the report." & @CR & "See the Third Party Access to SIMS.net SDK for details on the format of this xml string.", '/PARAMS:"ABCD"', 1,1)
 $output = GUICtrlCreateInput("", 121, 195, 249, 21)
-guictrlsettip(-1, "Output type", "Command Reporter GUI", 1,1)
+guictrlsettip(-1, "ABCD (quotes optional) is the name of the output file to write the report contents or parameter definitions to." & @CR & "The OUTPUT Parameter is optional, if left out the system will output the results in " & @CR & "standard xml to the console.", '/OUTPUT:"ABCD"', 1,1)
 $paramdef = GUICtrlCreateInput("", 121, 218, 249, 21)
-guictrlsettip(-1, "Parameters definitions", "Command Reporter GUI", 1,1)
+guictrlsettip(-1, "Output the parameter list for the specified report." & @CR & "If OUTPUT is not provided the results will be written in standard xml to the console." & @CR & "See the Third Party Access to SIMS.net SDK for details on the format of this xml string.", "/PARAMDEF", 1,1)
 $paramfile = GUICtrlCreateInput("", 121, 242, 249, 21)
-guictrlsettip(-1, "Parameters file (XML Format)", "Command Reporter GUI", 1,1)
+guictrlsettip(-1, "ABCD (quotes optional) is the filename of an xml file which contains the parameters for the report." & @CR & "See the Third Party Access to SIMS.net SDK for details on the format of this xml string.", '/PARAMFILE:"ABCD"', 1,1)
 $QUIET = GUICtrlCreateCheckbox("QUIET", 16, 272, 97, 17)
 
 ;export inputs
